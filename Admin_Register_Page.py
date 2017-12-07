@@ -1,31 +1,47 @@
 from tkinter import *
-username_list = []
-password_list = []
+from tkinter import messagebox
+
+def clear_entrybox():
+    username_entry.delete(0, END)
+    password_entry.delete(0, END)
+    password2_entry.delete(0, END)
+    savedata_button.config(font=("Helvetica", fontsize), text="Save Data", state=ACTIVE)
 
 def admin_username():
+    global file_username
     file_username = open("admin_username.txt", "a")
-    file_username.writelines(username_list)
 
 def admin_password():
+    global file_password
     file_password = open("password_username.txt", "a")
-    file_password.writelines(password_list)
+
 
 def save_admin_data():
+    username_list = []
+    password_list = []
     admin_username()
     admin_password()
     username_saved = username_entry.get()
-    #username_list.append(username_saved+"\n")
+    username_list.append(username_saved+"\n")
     password_saved = password_entry.get()
-    #password_saved.append(username_saved+"\n")
+    password_list.append(password_saved+"\n")
+    password2_saved = password2_entry.get()
+    file_username.writelines(username_list)
+    file_password.writelines(password_list)
     savedata_button.config(font=("Helvetica", fontsize), text = "Data Saved!", state = DISABLED)
+    username_list = []
+    password_list = []
+    file_username.close()
+    file_password.close()
 
 
 
 fontsize = 12
 def admin_register():
-    global username_entry, password_entry, savedata_button
+    global username_entry, password_entry, password2_entry, savedata_button
 
     register_admin = Tk()
+    register_admin.title("Register New Admin")
     username_label = Label(register_admin, text = "Username")
     username_label.grid(row = 1, column = 1, pady = 10, padx = 10, sticky = W)
     username_label.config(font = ("Helvetica", fontsize))
@@ -47,4 +63,9 @@ def admin_register():
     savedata_button = Button(register_admin, text = "Save Data", command = save_admin_data)
     savedata_button.grid(row = 4, column = 2, pady = 10, padx = 10)
     savedata_button.config(font=("Helvetica", fontsize))
+
+    reset_button = Button(register_admin, text="Reset", command=clear_entrybox)
+    reset_button.grid(row=4, column=1, pady=10, padx=10)
+    reset_button.config(font=("Helvetica", fontsize))
+
     register_admin.mainloop()
