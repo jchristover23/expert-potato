@@ -1,7 +1,9 @@
 from tkinter import messagebox
 from Admin_Register_Page import *
+from tkinter import *
 
 admin_login = Tk()
+
 admin_login.title("Admin Login")
 admin_login.minsize(width=200, height=200)
 admin_login.maxsize(width=750, height=750)
@@ -15,33 +17,53 @@ def login_failed():
 
 
 def show():
-    u=E1.get()
-    p=E2.get()
-    if u == "kenji" and p == "123":
-        login_success()
-    else:
+    uname_clean = []
+    psw_clean = []
+    file_username = open("admin_username.txt", "r")
+    file_password = open("password_username.txt", "r")
+    fu = file_username.readlines()
+    fp = file_password.readlines()
+
+    uname=E1.get()
+    psw=E2.get()
+
+    for element in fu:
+        element = element.strip()
+        uname_clean.append(element)
+
+    for element2 in fp:
+        element2 = element2.strip()
+        psw_clean.append(element2)
+
+    try:
+        name_index = uname_clean.index(uname)
+        psw_index = psw_clean.index(psw)
+        if str(name_index) == str(psw_index):
+            login_success()
+    except ValueError:
         login_failed()
 
 
-ADMIN = Label(admin_login, text = "WELCOME, PLEASE LOGIN FIRST...", font=(500))
-ADMIN.pack(side = TOP)
+ADMIN = Label(admin_login, text = "WELCOME! PLEASE LOGIN FIRST.\nBINUSIAN Parking System")
+ADMIN.config(font=("Helvetica", 16))
+ADMIN.grid(row = 1, column = 1, pady = 10, padx = 10, sticky = W)
 
 L1 = Label(admin_login, text="Username")
-L1.pack(side = LEFT)
+L1.grid(row = 3, column = 1, pady = 1, padx = 10, sticky = W)
+L1.config(font=("Helvetica", 15))
 E1 = Entry(admin_login, bd=2)
-E1.pack(side = LEFT)
+E1.grid(row = 4, column = 1, pady = 1, padx = 10, sticky = W)
 
 L2 = Label(admin_login, text="Password")
-#L2.grid(row = 3, column = 0)
-L2.pack(side = LEFT)
+L2.config(font=("Helvetica", 15))
+L2.grid(row = 5, column = 1, pady = 1, padx = 10, sticky = W)
 E2 = Entry(admin_login, bd=2, show="*")
-#E2.grid(row = 3, column = 1)
-E2.pack(side = LEFT)
+E2.grid(row = 6, column = 1, pady = 1, padx = 10, sticky = W)
 
-login = Button(admin_login, text = "LOGIN", font=(100), command=show)
-login.pack(side = BOTTOM)
+login = Button(admin_login, text = "LOGIN", command=show)
+login.grid(row = 7, column = 2, padx = 10, sticky = W)
 
-register = Button(admin_login, text = "REGISTER", font = (100), command = admin_register)
-register.pack(side = BOTTOM)
+register = Button(admin_login, text = "REGISTER", command = admin_register)
+register.grid(row = 8, column = 2, padx = 10, sticky = W)
 
 admin_login.mainloop()
