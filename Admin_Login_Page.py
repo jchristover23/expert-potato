@@ -20,7 +20,7 @@ def show():
     uname_clean = []
     psw_clean = []
     file_username = open("admin_username.txt", "r")
-    file_password = open("password_username.txt", "r")
+    file_password = open("admin_password.txt", "r")
     fu = file_username.readlines()
     fp = file_password.readlines()
 
