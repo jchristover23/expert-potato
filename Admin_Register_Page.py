@@ -13,7 +13,7 @@ def admin_username():
 
 def admin_password():
     global file_password
-    file_password = open("password_username.txt", "a")
+    file_password = open("admin_password.txt", "a")
 
 
 def save_admin_data():
