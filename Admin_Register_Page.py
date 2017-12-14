@@ -26,13 +26,16 @@ def save_admin_data():
     password_saved = password_entry.get()
     password_list.append(password_saved+"\n")
     password2_saved = password2_entry.get()
-    file_username.writelines(username_list)
-    file_password.writelines(password_list)
-    savedata_button.config(font=("Helvetica", fontsize), text = "Data Saved!", state = DISABLED)
-    username_list = []
-    password_list = []
-    file_username.close()
-    file_password.close()
+    if password_saved == password2_saved and len(password_saved) > 0 and len(password2_saved)>0 and len(username_saved)>0:
+        file_username.writelines(username_list)
+        file_password.writelines(password_list)
+        savedata_button.config(font=("Helvetica", fontsize), text = "Data Saved!", state = DISABLED)
+        username_list = []
+        password_list = []
+        file_username.close()
+        file_password.close()
+    else:
+        savedata_button.config(font=("Helvetica", fontsize), text = "Cek Data Kembali!", state = DISABLED)
 
 
 
