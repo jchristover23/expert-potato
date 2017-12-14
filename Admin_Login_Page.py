@@ -1,6 +1,7 @@
 from tkinter import messagebox
 from Admin_Register_Page import *
 from tkinter import *
+import msvcrt
 
 admin_login = Tk()
 
@@ -38,7 +39,9 @@ def show():
     try:
         name_index = uname_clean.index(uname)
         psw_index = psw_clean.index(psw)
-        if str(name_index) == str(psw_index):
+        if len(E1.get()) == 0:
+            login_failed()
+        elif str(name_index) == str(psw_index):
             login_success()
     except ValueError:
         login_failed()
@@ -60,10 +63,18 @@ L2.grid(row = 5, column = 1, pady = 1, padx = 10, sticky = W)
 E2 = Entry(admin_login, bd=2, show="*")
 E2.grid(row = 6, column = 1, pady = 1, padx = 10, sticky = W)
 
-login = Button(admin_login, text = "LOGIN", command=show)
-login.grid(row = 7, column = 2, padx = 10, sticky = W)
+def button_function():
+    login = Button(admin_login, text = "LOGIN", command=show)
+    login.grid(row = 7, column = 2, padx = 10, sticky = W)
 
 register = Button(admin_login, text = "REGISTER", command = admin_register)
 register.grid(row = 8, column = 2, padx = 10, sticky = W)
+
+        #key = ord(msvcrt.getch())
+        #if key == 13:
+        #button_function()
+        #key = ord(msvcrt.getch())
+        #if key == 13:
+        #    button_function()
 
 admin_login.mainloop()
