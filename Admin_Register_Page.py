@@ -17,6 +17,8 @@ def admin_password():
 
 
 def save_admin_data():
+    check_username = open("admin_username.txt", "r")
+    check_username2 = check_username.readlines()
     username_list = []
     password_list = []
     admin_username()
@@ -26,22 +28,23 @@ def save_admin_data():
     password_saved = password_entry.get()
     password_list.append(password_saved+"\n")
     password2_saved = password2_entry.get()
-    if password_saved == password2_saved and len(password_saved) > 0 and len(password2_saved)>0 and len(username_saved)>0:
+    if password_saved == password2_saved and len(password_saved) > 0 and len(password2_saved)>0 and len(username_saved)>0 and username_saved+"\n" not in check_username2:
         file_username.writelines(username_list)
         file_password.writelines(password_list)
         savedata_button.config(font=("Helvetica", fontsize), text = "Data Saved!", state = DISABLED)
+        reset_button.config(state= DISABLED)
         username_list = []
         password_list = []
         file_username.close()
         file_password.close()
     else:
-        savedata_button.config(font=("Helvetica", fontsize), text = "Cek Data Kembali!", state = DISABLED)
+        savedata_button.config(font=("Helvetica", fontsize), text = "INVALID DATA! / USERNAME IS TAKEN \n PRESS RESET FIRST!", state = DISABLED)
 
 
 
 fontsize = 12
 def admin_register():
-    global username_entry, password_entry, password2_entry, savedata_button
+    global username_entry, password_entry, password2_entry, savedata_button, reset_button
 
     register_admin = Tk()
     register_admin.title("Register New Admin")
@@ -70,5 +73,8 @@ def admin_register():
     reset_button = Button(register_admin, text="Reset", command=clear_entrybox)
     reset_button.grid(row=4, column=1, pady=10, padx=10)
     reset_button.config(font=("Helvetica", fontsize))
+
+
+    register_admin.bind('<Return>', lambda press_key: save_admin_data())
 
     register_admin.mainloop()
