@@ -15,7 +15,6 @@ def admin_password():
     global file_password
     file_password = open("admin_password.txt", "a")
 
-
 def save_admin_data():
     check_username = open("admin_username.txt", "r")
     check_username2 = check_username.readlines()
@@ -41,12 +40,13 @@ def save_admin_data():
         savedata_button.config(font=("Helvetica", fontsize), text = "INVALID DATA! / USERNAME IS TAKEN \n PRESS RESET FIRST!", state = DISABLED)
 
 
-
 fontsize = 12
 def admin_register():
     global username_entry, password_entry, password2_entry, savedata_button, reset_button
 
-    register_admin = Tk()
+    register_admin = Toplevel()
+    register_admin.after(1, lambda: register_admin.focus_force())
+
     register_admin.title("Register New Admin")
     username_label = Label(register_admin, text = "Username")
     username_label.grid(row = 1, column = 1, pady = 10, padx = 10, sticky = W)
@@ -73,7 +73,6 @@ def admin_register():
     reset_button = Button(register_admin, text="Reset", command=clear_entrybox)
     reset_button.grid(row=4, column=1, pady=10, padx=10)
     reset_button.config(font=("Helvetica", fontsize))
-
 
     register_admin.bind('<Return>', lambda press_key: save_admin_data())
 
