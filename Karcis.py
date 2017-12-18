@@ -1,4 +1,4 @@
-import random
+import random,Scan
 from datetime import datetime
 from tkinter import *
 from tkinter import messagebox
@@ -8,6 +8,8 @@ E1 = ' '
 E3 = ' '
 biaya = ' '
 menit_masuk = ' '
+
+
 def cek():
     try:
         if len(E1.get()) != 8:
@@ -20,17 +22,26 @@ def cek():
 def cek_bayar():
     if int(E3.get()) > int(biaya):
         kembali = int(E3.get()) - int(biaya)
-        messagebox.showinfo("Terima Kasih", "Kembalian Anda %d\nHati - Hati di jalan!"%kembali)
+        hitung.destroy()
+        messagebox.showinfo("Terima Kasih", "Kembalian Anda %d\nHati - Hati di jalan!" % kembali)
+        karcis.destroy()
+        Scan.scan()
     elif int(E3.get()) == int(biaya):
+        hitung.destroy()
         messagebox.showinfo("Terima Kasih", "Hati - Hati di jalan!")
+        karcis.destroy()
+        Scan.scan()
     else:
+        hitung.destroy()
         messagebox.showerror("Alert","Maaf Uang Anda Kurang")
+        biaya_hitung()
 
 def karcis():
     global E1
     global TIPE
     global jam_masuk
     global menit_masuk
+    global karcis
     karcis = Tk()
     karcis.title("Rincian Parkir Anda")
     L1 = Label(karcis, text="Nama :")
@@ -88,13 +99,14 @@ def karcis():
     E1.config(font=("Helvetica", 15))
     E1.grid(row = 6, column=2,pady=1,padx=5,sticky = W)
     hitung = Button(karcis, text="Hitung", command=cek)
+    karcis.bind('<Return>', lambda press_key: cek())
     hitung.grid(row=7, column=3, pady=5, padx=10, sticky=W)
     karcis.mainloop()
-    return TIPE, jam_masuk
 
 def biaya_hitung():
     global E3
     global biaya
+    global hitung
     hitung = Tk()
     hitung.title("Biaya")
     L1 = Label(hitung, text="Biaya :")
@@ -124,5 +136,5 @@ def biaya_hitung():
     bayar = Button(hitung, text="Bayar", command=cek_bayar)
     bayar.grid(row=3, column=2, pady=5, padx=10, sticky=W)
 
-    hitung.bind('<Return>', lambda x: cek_bayar())
+    hitung.bind('<Return>', lambda press_key: cek_bayar())
     hitung.mainloop()
