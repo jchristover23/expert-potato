@@ -1,4 +1,4 @@
-import random,Scan
+import random, Scan
 from datetime import datetime
 from tkinter import *
 from tkinter import messagebox
@@ -43,6 +43,7 @@ def karcis():
     global menit_masuk
     global karcis
     karcis = Tk()
+    karcis.after(1, lambda: karcis.focus_force())
     karcis.title("Rincian Parkir Anda")
     L1 = Label(karcis, text="Nama :")
     L1.grid(row = 1, column = 1, pady = 1, padx = 5, sticky = W)
@@ -108,6 +109,7 @@ def biaya_hitung():
     global biaya
     global hitung
     hitung = Tk()
+    hitung.after(1, lambda: hitung.focus_force())
     hitung.title("Biaya")
     L1 = Label(hitung, text="Biaya :")
     L1.config(font=("Helvetica", 15))
